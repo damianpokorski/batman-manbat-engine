@@ -1,0 +1,13 @@
+Winmain is running
+Checking Parameters
+Preloading...
+Initialising...
+Resolution800:600
+Creating window...
+Creating th D3D Object Lets do dis.
+Creating Direct3D Device. Whoosh
+Hardware vertex processing activated. Launching photon torpedoes.Creating a 2D Renderer
+Initializing input system.
+Initializing game:00090252
+ambient.fx? HR: -2005529767
+ambient.fx?
