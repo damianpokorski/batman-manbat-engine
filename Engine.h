@@ -267,6 +267,9 @@ namespace Manbat{
 			Texture* cacheTexture(std::string filename);
 			std::map<std::string, Texture*> cacheTextureStorage;
 
+			std::map<EntityType, vector<Entity*>> SortedEntities;
+
+			int CollideEntityTypes(EntityType Foo, EntityType Bar);
 	};
 };
 

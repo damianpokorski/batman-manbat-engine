@@ -229,7 +229,7 @@ namespace Manbat{
 		GetWindowRect(p_windowHandle, &windowpos);
 		SetCursorPos(windowpos.left + (g_engine->GetScreenWidth() / 2), windowpos.top + (g_engine->GetScreenHeight() / 2));
 */
-		
+		Manbat::Timer Timer;
 		static float accumTime=0;
 
 		p_coreFrameCount++;
@@ -333,34 +333,55 @@ namespace Manbat{
 		p_entities.push_back(entity);
 
 		id++;
+		// Check if entity group is set - if not add vector with entity type
+		if (SortedEntities.find(entity->entityType) == SortedEntities.end()) {
+			vector<Entity*> entityContainer;
+			SortedEntities.insert(std::pair<EntityType, vector<Entity*>>(entity->entityType, entityContainer));
+		}
+		// Add entity to the sorted group
+		SortedEntities[entity->entityType].push_back(entity);
 	}
 
 	void Engine::updateEntities(float deltaTime){
 		//BOOST_FOREACH(Entity* entity, p_entities){
+		
 		for(int i=0; i < p_entities.size(); i++){
 			if(p_entities[i]->getAlive()){
 				p_entities[i]->Update(deltaTime);
 				RaiseEvent(new EntityUpdateEvent(p_entities[i]));
 				if(p_entities[i]->getLifetime() > 0){
-
 					p_entities[i]->addToLifetimeCounter(deltaTime*1000);
-
 					if(p_entities[i]->lifetimeExpired()){
 						p_entities[i]->setAlive(false);
 					}
 				}
 			}
 		}
+		
 	}
 
 	void Engine::buryEntities(){
+		// Erase from main entity container
 		std::vector<Entity*>::iterator iter = p_entities.begin();
 		while(iter!=p_entities.end()){
 			if((*iter)->getAlive()==false){
-				delete (*iter);
 				iter = p_entities.erase(iter);
 			}else{
 				iter++;
+			}
+		}
+		// remove from the sorted array and then delete the pointer
+		for (std::map<EntityType, vector<Entity*>>::iterator it = SortedEntities.begin(); it != SortedEntities.end(); ++it)
+		{
+			std::vector<Entity*>::iterator sorterIter = it->second.begin();
+			while (sorterIter != it->second.end()) {
+				if ((*sorterIter)->getAlive() == false) {
+					sorterIter = it->second.erase(sorterIter);
+					delete (*sorterIter);
+				}
+				else {
+					sorterIter++;
+				}
 			}
 		}
 	}
@@ -418,25 +439,37 @@ namespace Manbat{
 			p_entities[i]->setCollideBuddy(NULL);
 		}
 		Debug << "[Collision] Entities: " << p_entities.size() << std::endl;
-		if(!p_globalCollision) return;
 		int checks = 0;
-		for (int i = 0; i < p_entities.size(); i++) {
-			if(p_entities[i]->getAlive() && p_entities[i]->isCollidable()){
-				for (int j = 0; j < p_entities.size(); j++) {
-					if(p_entities[j]->getAlive() && p_entities[j]->isCollidable()){	
-						if (Collision(p_entities[i], p_entities[j])) {
-							p_entities[i]->setCollided(true);
-							p_entities[i]->setCollideBuddy(p_entities[j]);
-							p_entities[j]->setCollided(true);
-							p_entities[j]->setCollideBuddy(p_entities[j]);
+		//if(!p_globalCollision) return;
+		if(p_globalCollision)
+		{
+			for (int i = 0; i < p_entities.size(); i++) {
+				if (p_entities[i]->getAlive() && p_entities[i]->isCollidable()) {
+					for (int j = 0; j < p_entities.size(); j++) {
+						if (p_entities[j]->getAlive() && p_entities[j]->isCollidable()) {
+							if (Collision(p_entities[i], p_entities[j])) {
+								p_entities[i]->setCollided(true);
+								p_entities[i]->setCollideBuddy(p_entities[j]);
+								p_entities[j]->setCollided(true);
+								p_entities[j]->setCollideBuddy(p_entities[j]);
+							}
+							checks++;
 						}
-						checks++;
 					}
 				}
 			}
+		}else
+		{
+			// If scenery to player and enemies collision
+			checks+= CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_SCENERY_MESH);
+			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_MAINPLANE);
+			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_ENEMY_MESH);
+			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_COLLECTABLE_MESH);
+			checks += CollideEntityTypes(EntityType::ENTITY_ENEMY_MESH, EntityType::ENTITY_SCENERY_MESH);
 		}
-		Debug << "[Collision] Entities collisions took: " << timer.getElapsedClock() << std::endl;
-		Debug << "[Collision] Collision checks: " << checks << std::endl;
+		Debug << "[Collision] Checked for: " << checks << " collisions." << std::endl;
+		Debug << "[Collision] Collision checks took: 1/" << (1.0f/timer.getElapsedClock()) << " of a second" << std::endl;
+
 	}
 
 	bool Engine::Collision(Entity* entity1, Entity* entity2){
@@ -686,5 +719,34 @@ namespace Manbat{
 		}
 		cacheTextureStorage.insert(std::pair<std::string, Texture*>(filename, Text));
 		return Text;
+	}
+
+	int Engine::CollideEntityTypes(EntityType Foo, EntityType Bar)
+	{
+		int CollisionChecks = 0;
+		if (SortedEntities.find(Foo) == SortedEntities.end()) return CollisionChecks;
+		if (SortedEntities.find(Bar) == SortedEntities.end()) return CollisionChecks;
+		for (int i = 0; i < SortedEntities[Foo].size(); i++)
+		{
+			//if (SortedEntities[Foo][i]->getAlive() && SortedEntities[Foo][i]->isCollidable())
+			//{
+				for (int j = 0; j < SortedEntities[Bar].size(); j++)
+				{
+					//if (SortedEntities[Bar][j]->getAlive() && SortedEntities[Bar][j]->isCollidable())
+					//{
+						if (Collision(SortedEntities[Foo][i], SortedEntities[Bar][j]))
+						{
+							// assign properties
+							SortedEntities[Foo][i]->setCollided(true);
+							SortedEntities[Foo][i]->setCollideBuddy(SortedEntities[Bar][j]);
+							SortedEntities[Bar][j]->setCollided(true);
+							SortedEntities[Bar][j]->setCollideBuddy(SortedEntities[Foo][i]);
+						}
+					//}
+					CollisionChecks++;
+				}
+			//}
+		}
+		return CollisionChecks;
 	}
 }

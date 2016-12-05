@@ -39,6 +39,7 @@ void game_end() {
 }
 
 void game_update(float deltaTime) {
+	Manbat::Timer T;
 	// If see if any gamestate calls for a change
 	for (int i = 0; i < GameStates.size(); i++) {
 		if (GameStates[i]->target != Screen::ScreenEnum::none) {
@@ -73,6 +74,7 @@ void game_update(float deltaTime) {
 			GameStates[i]->Update(deltaTime);
 		}
 	}
+	Debug << "[Engine][Update] Update took 1/" << (1.0f / T.getElapsedClock()) << std::endl;
 }
 
 void game_render3D() {
