@@ -43,7 +43,7 @@ namespace Manbat{
 		//delete image texture 
 		delete p_image;
 		//delete each sprite in the particles array
-		for (int i = 0; i < p_particles.size(); i++) {
+		for (size_t i = 0; i < p_particles.size(); i++) {
 			delete p_particles[i];
 			p_particles[i] = NULL;
 		}
@@ -91,7 +91,7 @@ namespace Manbat{
 
 		//for each sprite in the particles vector
 		//BOOST_FOREACH(Sprite* sprite, p_particles)
-		for(int i = 0; i < p_particles.size(); i++)
+		for(size_t i = 0; i < p_particles.size(); i++)
 		{
 			//if rotate set, give random rotation
 			if (rotate){
@@ -115,7 +115,7 @@ namespace Manbat{
 
 		//for each sprite in the particle vector
 		//BOOST_FOREACH(Sprite* sprite, p_particles){
-		for(int i = 0; i < p_particles.size(); i++){
+		for(size_t i = 0; i < p_particles.size(); i++){
 			//update particle's position
 			p_particles[i]->Update(deltaTime * 50.0f);
 

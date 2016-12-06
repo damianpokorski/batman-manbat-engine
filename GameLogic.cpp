@@ -57,7 +57,7 @@ namespace Manbat {
 		cam->cameraOffset = cam->cameraOffsetDefault;
 		g_engine->playerController = cam;
 		// assign camera controller pointer to the enemies, for the state handling purpose
-		for (int i = 0; i < scene->contents.size(); i++) {
+		for (size_t i = 0; i < scene->contents.size(); i++) {
 			if (scene->contents[i]->getEntityType() == ENTITY_ENEMY_MESH) {
 				((Enemy*)scene->contents[i])->playerController = cam->camera;
 			}
@@ -137,7 +137,7 @@ namespace Manbat {
 				cam->flying = pScreen->flying;
 				// camera wobble
 				if (pScreen->dizziness) {
-					sinPower = 0.1;
+					sinPower = 0.1f;
 					animationReset("cameraWobble");
 					cameraWobble = 1;
 				}
@@ -158,7 +158,7 @@ namespace Manbat {
 			}
 			return;
 		}
-		for (int i = 0; i < scene->contents.size(); i++) {
+		for (size_t i = 0; i < scene->contents.size(); i++) {
 			if (scene->contents[i]->getEntityType() == ENTITY_BILLBOARD){
 				if (((Billboard*)scene->contents[i])->AttachedTo == NULL) {
 						scene->contents[i]->setPosition(scene->contents[i]->getPosition().getX(),40 + 10 * animationValue("TutorialBillboard", 2.5f, AnimationRepeat::PingPong),scene->contents[i]->getPosition().getZ());
@@ -265,18 +265,18 @@ namespace Manbat {
 
 		// Animation handling
 		// Insulin
-		Content2D[1]->setSize(200, 58 + 111 * (1 - (insulin /100)));
+		Content2D[1]->setSize(200, (int)(58 + 111 * (1 - (insulin / 100))));
 		// Energy
-		Content2D[3]->setSize(200, 58 + 111 * (1 - (energy / 100)));
+		Content2D[3]->setSize(200, (int)(58 + 111 * (1 - (energy / 100))));
 		// health
-		Content2D[5]->setSize(200, 58 + 111 * (1 -(health / 100)));
+		Content2D[5]->setSize(200, (int)(58 + 111 * (1 - (health / 100))));
 
 		scene->Update(deltaTime);
 		//scene->Transform();
 		// Updating the camera
 		cam->Update(deltaTime);
 		// Billboard related
-		for (int i = 0; i < scene->contents.size(); i++) {
+		for (size_t i = 0; i < scene->contents.size(); i++) {
 			if (scene->contents[i]->getEntityType() == ENTITY_BILLBOARD) {
 				((Billboard*)scene->contents[i])->rotateBillboard(cam->camera);
 			}
@@ -317,7 +317,7 @@ namespace Manbat {
 			pScreen->Render2D();
 			return;
 		}
-		for (int i = 0; i < Content2D.size(); i++) {
+		for (size_t i = 0; i < Content2D.size(); i++) {
 			Content2D[i]->Render();
 		}
 		// Bar values
@@ -469,7 +469,7 @@ namespace Manbat {
 		g_engine->playerController = cam;
 		cam->hitFlag = false;
 		// Assign camera controller pointer to the enemies, for the state handling purpose
-		for (int i = 0; i < scene->contents.size(); i++) {
+		for (size_t i = 0; i < scene->contents.size(); i++) {
 			if (scene->contents[i]->getEntityType() == ENTITY_ENEMY_MESH) {
 				((Enemy*)scene->contents[i])->playerController = cam->camera;
 			}

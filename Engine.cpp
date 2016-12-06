@@ -345,7 +345,7 @@ namespace Manbat{
 	void Engine::updateEntities(float deltaTime){
 		//BOOST_FOREACH(Entity* entity, p_entities){
 		
-		for(int i=0; i < p_entities.size(); i++){
+		for(size_t i=0; i < p_entities.size(); i++){
 			if(p_entities[i]->getAlive()){
 				p_entities[i]->Update(deltaTime);
 				RaiseEvent(new EntityUpdateEvent(p_entities[i]));
@@ -407,7 +407,7 @@ namespace Manbat{
 		//}
 	}
 	Entity* Engine::findEntity(std::string name){
-		for (int i = 0; i < p_entities.size(); i++) {
+		for (size_t i = 0; i < p_entities.size(); i++) {
 			if(p_entities[i]->getAlive() && p_entities[i]->getName() == name){
 				return p_entities[i];
 			}
@@ -415,7 +415,7 @@ namespace Manbat{
 		return NULL;
 	}
 	Entity* Engine::findEntity(int id){
-		for (int i = 0; i < p_entities.size(); i++) {
+		for (size_t i = 0; i < p_entities.size(); i++) {
 			if(p_entities[i]->getAlive() && p_entities[i]->getID() == id){
 				return p_entities[i];
 			}
@@ -424,7 +424,7 @@ namespace Manbat{
 	}
 	int Engine::getEntityCount(enum EntityType entityType){
 		int total = 0;
-		for (int i = 0; i < p_entities.size(); i++) {
+		for (size_t i = 0; i < p_entities.size(); i++) {
 			if(p_entities[i]->getAlive() && p_entities[i]->getEntityType() == entityType){
 				total++;
 			}
@@ -434,7 +434,7 @@ namespace Manbat{
 
 	void Engine::testForCollisions(){
 		Manbat::Timer timer;
-		for (int i = 0; i < p_entities.size(); i++) {
+		for (size_t i = 0; i < p_entities.size(); i++) {
 			p_entities[i]->setCollided(false);
 			p_entities[i]->setCollideBuddy(NULL);
 		}
@@ -443,9 +443,9 @@ namespace Manbat{
 		//if(!p_globalCollision) return;
 		if(p_globalCollision)
 		{
-			for (int i = 0; i < p_entities.size(); i++) {
+			for (size_t i = 0; i < p_entities.size(); i++) {
 				if (p_entities[i]->getAlive() && p_entities[i]->isCollidable()) {
-					for (int j = 0; j < p_entities.size(); j++) {
+					for (size_t j = 0; j < p_entities.size(); j++) {
 						if (p_entities[j]->getAlive() && p_entities[j]->isCollidable()) {
 							if (Collision(p_entities[i], p_entities[j])) {
 								p_entities[i]->setCollided(true);
@@ -643,8 +643,6 @@ namespace Manbat{
 	}
 
 	bool Engine::RayAABBCollision(Mesh* player, Ray* shot){
-		int hasHit;
-		float distanceToCollision;
 
 		Vector3 rayTestVec0 = shot->RayBegin;
 		Vector3 rayTestVec1 = shot->RayBegin + shot->direction * 100;
@@ -652,11 +650,11 @@ namespace Manbat{
 		Vector3 BoxMin = player->getPosition()+player->getBoundingBox().min;
 		Vector3 BoxMax = player->getPosition()+player->getBoundingBox().max;
 
-		float fractionLow = 0;
-		float fractionHigh = 1;
+		double fractionLow = 0;
+		double fractionHigh = 1;
 
-		float fractionLowX = (BoxMin.x - rayTestVec0.x) / (rayTestVec1.x - rayTestVec0.x);
-		float fractionHighX = (BoxMax.x - rayTestVec0.x) / (rayTestVec1.x - rayTestVec0.x);
+		double fractionLowX = (BoxMin.x - rayTestVec0.x) / (rayTestVec1.x - rayTestVec0.x);
+		double fractionHighX = (BoxMax.x - rayTestVec0.x) / (rayTestVec1.x - rayTestVec0.x);
 
 		if(fractionHighX < fractionLowX){
 			swap(fractionLowX,fractionHighX);
@@ -668,8 +666,8 @@ namespace Manbat{
 			return false;
 		}
 
-		float fractionLowY = (BoxMin.y - rayTestVec0.y) / (rayTestVec1.y - rayTestVec0.y);
-		float fractionHighY = (BoxMax.y - rayTestVec0.y) / (rayTestVec1.y - rayTestVec0.y);
+		double fractionLowY = (BoxMin.y - rayTestVec0.y) / (rayTestVec1.y - rayTestVec0.y);
+		double fractionHighY = (BoxMax.y - rayTestVec0.y) / (rayTestVec1.y - rayTestVec0.y);
 
 		if(fractionHighY < fractionLowY){
 			swap(fractionLowY,fractionHighY);
@@ -681,8 +679,8 @@ namespace Manbat{
 			return false;
 		}
 
-		float fractionLowZ = (BoxMin.z - rayTestVec0.z) / (rayTestVec1.z - rayTestVec0.z);
-		float fractionHighZ = (BoxMax.z - rayTestVec0.z) / (rayTestVec1.z - rayTestVec0.z);
+		double fractionLowZ = (BoxMin.z - rayTestVec0.z) / (rayTestVec1.z - rayTestVec0.z);
+		double fractionHighZ = (BoxMax.z - rayTestVec0.z) / (rayTestVec1.z - rayTestVec0.z);
 
 		if(fractionHighZ < fractionLowZ){
 			swap(fractionLowZ,fractionHighZ);
@@ -726,11 +724,11 @@ namespace Manbat{
 		int CollisionChecks = 0;
 		if (SortedEntities.find(Foo) == SortedEntities.end()) return CollisionChecks;
 		if (SortedEntities.find(Bar) == SortedEntities.end()) return CollisionChecks;
-		for (int i = 0; i < SortedEntities[Foo].size(); i++)
+		for (size_t i = 0; i < SortedEntities[Foo].size(); i++)
 		{
 			//if (SortedEntities[Foo][i]->getAlive() && SortedEntities[Foo][i]->isCollidable())
 			//{
-				for (int j = 0; j < SortedEntities[Bar].size(); j++)
+				for (size_t j = 0; j < SortedEntities[Bar].size(); j++)
 				{
 					//if (SortedEntities[Bar][j]->getAlive() && SortedEntities[Bar][j]->isCollidable())
 					//{

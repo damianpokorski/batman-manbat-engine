@@ -6,13 +6,13 @@ namespace Manbat
 {
 	class EAngle{
 	public:
-		float p, y, r; //pitch / yaw/ roll
+		double p, y, r; //pitch / yaw/ roll
 
 		EAngle(){
 			p = y = r = 0;
 		}
 
-		EAngle(float pitch, float yaw, float roll) {
+		EAngle(double pitch, double yaw, double roll) {
 			p = pitch;
 			y = yaw;
 			r = roll;

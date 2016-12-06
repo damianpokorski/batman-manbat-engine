@@ -250,27 +250,27 @@ namespace Manbat {
 	void Scene::LazyRender(Effect* e, Camera* c) {
 
 		// dont render billboards in the first "pass"
-		for (int i = 0; i < contents.size(); i++) {
+		for (size_t i = 0; i < contents.size(); i++) {
 			if (contents[i]->getEntityType() != ENTITY_BILLBOARD) {
 				contents[i]->LazyRender(e, c);
 			}
 		}
 		// Render billboards after all other elements have been rendered, this allows the transparency to show other that are behind the billboard. 
 		// Ultimate solution for this should be to sort the objects by the distance to the camera and render the furthest first
-		for (int i = 0; i < contents.size(); i++) {
+		for (size_t i = 0; i < contents.size(); i++) {
 			if (contents[i]->getEntityType() == ENTITY_BILLBOARD) {
 				contents[i]->LazyRender(e, c);
 			}
 		}
 	}
 	void Scene::Transform() {
-		for (int i = 0; i < contents.size(); i++) {
+		for (size_t i = 0; i < contents.size(); i++) {
 			contents[i]->Transform();
 		}
 	}
 	void Scene::Update(float deltaTime) {
 		//sortBillboardsByDistance();
-		for (int i = 0; i < contents.size(); i++) {
+		for (size_t i = 0; i < contents.size(); i++) {
 			contents[i]->Update(deltaTime);
 		}
 	}

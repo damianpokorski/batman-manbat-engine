@@ -39,8 +39,8 @@ namespace Manbat{
         static Vector3 Normal(double x,double y,double z);
         static Vector3 Normal(Vector3& V);
 		// Extra bits
-		static float Approach(float flGoal, float flCurrent, float dt) {
-			float flDifference = flGoal - flCurrent;
+		static double Approach(double flGoal, double flCurrent, double dt) {
+			double flDifference = flGoal - flCurrent;
 
 			if (flDifference > dt)
 				return flCurrent + dt;
@@ -49,7 +49,7 @@ namespace Manbat{
 
 			return flGoal;
 		};
-		static Vector3 Approach(Vector3 flGoal, Vector3 flCurrent, float dt) {
+		static Vector3 Approach(Vector3 flGoal, Vector3 flCurrent, double dt) {
 			Vector3 result = Vector3(0, 0, 0);
 			result.setX(Approach(flGoal.getX(), flCurrent.getX(), dt));
 			result.setY(Approach(flGoal.getY(), flCurrent.getY(), dt));

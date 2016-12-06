@@ -94,6 +94,7 @@
     <ClInclude Include="BitmapFont.h" />
     <ClInclude Include="BoneMesh.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CharacterLoader.h" />
     <ClInclude Include="Collectable.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="CreditsScreen.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="BitmapFont.cpp" />
     <ClCompile Include="BoneMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CharacterLoader.cpp" />
     <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="EAngle.cpp" />

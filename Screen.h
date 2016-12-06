@@ -26,12 +26,15 @@ namespace Manbat {
 			std::vector <ImprovedMesh*> Content3D;
 
 			Scene* Level;
-
+			// Initializes the level
 			void virtual Init() = 0;
+			// Handles updates
 			void virtual Update(float delta) = 0;
+			// Handles rendering of 3d components
 			void virtual Render3D()=0;
+			// 
 			void virtual Render2D()=0;
-			
+			virtual void Deactivate() = 0;
 			void virtual InputEvent(IEvent* e) = 0;
 			
 			float time;

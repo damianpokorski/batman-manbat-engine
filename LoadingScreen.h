@@ -57,13 +57,13 @@ namespace Manbat {
 			// Options
 			time += delta;
 			
-			Content2D[2]->setSize(animationValue("LoadingBar", 5, AnimationRepeat::PingPong) * 1200, 50);
+			Content2D[2]->setSize((int)(animationValue("LoadingBar", 5, AnimationRepeat::PingPong) * 1200), 50);
 			if(animationAsTimer("LoadingScreen", 3)) {
 				animationReset("LoadingScreen");
 			}
 		};
 		virtual void Render2D() {
-			for (int i = 0; i < Content2D.size(); i++) {
+			for (size_t i = 0; i < Content2D.size(); i++) {
 				Content2D[i]->Render();
 			}
 			font->Print(400, 550, sillyText[0]);

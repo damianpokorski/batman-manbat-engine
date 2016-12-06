@@ -15,9 +15,9 @@ namespace Manbat {
 		};
 		
 		void rotateBillboard(Camera* cam) {
-			float angleZ = 0;
-			float deltaX = this->getPosition().getX()+this->getScale().getX() - cam->getPosition().getX();
-			float deltaZ = (this->getPosition().getZ()+this->getScale().getZ()) - cam->getPosition().getZ();
+			double angleZ = 0;
+			double deltaX = this->getPosition().getX()+this->getScale().getX() - cam->getPosition().getX();
+			double deltaZ = (this->getPosition().getZ()+this->getScale().getZ()) - cam->getPosition().getZ();
 			angleZ = atan2(deltaX, deltaZ) * 180 / D3DX_PI;
 			this->setRotation(0, -90, angleZ);
 			

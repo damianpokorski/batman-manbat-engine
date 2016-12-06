@@ -56,7 +56,7 @@ namespace Manbat {
 			Content2D[3]->setRotation(Content2D[3]->getRotation() + delta * 5);
 		};
 		virtual void Render2D() {
-			for (int i = 0; i < Content2D.size(); i++) {
+			for (size_t i = 0; i < Content2D.size(); i++) {
 				Content2D[i]->Render();
 			}
 			

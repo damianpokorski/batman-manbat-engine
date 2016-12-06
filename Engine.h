@@ -37,6 +37,7 @@
 #include <mmreg.h>
 #include <dsound.h>
 #include <cmath>
+#include "tinyxml2.h"
 // Engine stuff
 
 #include "Entity.h"
@@ -82,6 +83,7 @@
 #include "LoadingScreen.h"
 #include "CreditsScreen.h"
 #include "GameLogic.h"
+#include "CharacterLoader.h"
 
 // Load libraries
 #pragma comment(lib, "d3d9.lib")		// d3d

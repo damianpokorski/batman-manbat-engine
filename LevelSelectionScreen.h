@@ -90,7 +90,7 @@ namespace Manbat {
 			}
 		};
 		virtual void Render2D() {
-			for (int i = 0; i < Content2D.size(); i++) {
+			for (size_t i = 0; i < Content2D.size(); i++) {
 				Content2D[i]->Render();
 			}
 

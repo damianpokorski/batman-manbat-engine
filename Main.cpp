@@ -18,7 +18,7 @@ bool game_init(HWND hwnd) {
 	cSoundLayer::Create(g_engine->GetWindowHandle());
 	BGM = new cSound("Sound/BGM.wav");
 	BGM->Play(true);
-	
+	 // Insulin Rush
 	GameStates.push_back(new StartScreen());
 	GameStates.back()->isActive = true;
 	GameStates.push_back(new LevelSelectionScreen());
@@ -28,12 +28,17 @@ bool game_init(HWND hwnd) {
 	GameStates.push_back(new CreditsScreen());
 	//GameStates.back()->isActive = true;
 	
+	/* //Scarlet skyline
+	GameStates.push_back(new CharacterLoader());
+	GameStates.back()->isActive = true;
+	GameStates.back()->Init();
+	*/
 	return true;
 }
 
 void game_end() {
 	g_engine->buryEntities();
-	for (int i = 0; i < GameStates.size(); i++) {
+	for (size_t i = 0; i < GameStates.size(); i++) {
 		delete GameStates[i];
 	}
 }
@@ -41,11 +46,11 @@ void game_end() {
 void game_update(float deltaTime) {
 	Manbat::Timer T;
 	// If see if any gamestate calls for a change
-	for (int i = 0; i < GameStates.size(); i++) {
+	for (size_t i = 0; i < GameStates.size(); i++) {
 		if (GameStates[i]->target != Screen::ScreenEnum::none) {
 			// Pass selected level from selection screen, I know it's an ugly solution.. but well.. it's an exception.
 			if (GameStates[i]->self == Screen::levelSelectionScreen && GameStates[i]->target == Screen::gameLogic) {
-				for (int j = 0; j < GameStates.size(); j++) {
+				for (size_t j = 0; j < GameStates.size(); j++) {
 					if (GameStates[j]->self == GameStates[i]->target) {
 						((GameLogic*)GameStates[j])->reloadTarget = ((LevelSelectionScreen*)GameStates[i])->selectedLevel;
 						((GameLogic*)GameStates[j])->reloadTrigger = true;
@@ -57,7 +62,7 @@ void game_update(float deltaTime) {
 				}
 			}
 			else {
-				for (int j = 0; j < GameStates.size(); j++) {
+				for (size_t j = 0; j < GameStates.size(); j++) {
 					if (GameStates[j]->self == GameStates[i]->target) {
 						GameStates[j]->isActive = true;
 					}
@@ -69,7 +74,7 @@ void game_update(float deltaTime) {
 			GameStates[i]->target = Screen::ScreenEnum::none;
 		}
 	}
-	for (int i = 0; i < GameStates.size(); i++) {
+	for (size_t i = 0; i < GameStates.size(); i++) {
 		if (GameStates[i]->isActive) {
 			GameStates[i]->Update(deltaTime);
 		}
@@ -78,7 +83,7 @@ void game_update(float deltaTime) {
 }
 
 void game_render3D() {
-	for (int i = 0; i < GameStates.size(); i++) {
+	for (size_t i = 0; i < GameStates.size(); i++) {
 		if (GameStates[i]->isActive) {
 			GameStates[i]->Render3D();
 		}
@@ -86,7 +91,7 @@ void game_render3D() {
 }
 
 void game_render2D() {
-	for (int i = 0; i < GameStates.size(); i++) {
+	for (size_t i = 0; i < GameStates.size(); i++) {
 		if (GameStates[i]->isActive) {
 			GameStates[i]->Render2D();
 		}
@@ -94,7 +99,7 @@ void game_render2D() {
 }
 
 void game_event(IEvent* e) {
-	for (int i = 0; i < GameStates.size(); i++) {
+	for (size_t i = 0; i < GameStates.size(); i++) {
 		if (GameStates[i]->isActive) {
 			GameStates[i]->InputEvent(e);
 		}

@@ -41,7 +41,7 @@ namespace Manbat{
 		wfx.nChannels = 2;
 		wfx.nSamplesPerSec = 22050;
 		wfx.wBitsPerSample = 16;
-		wfx.nBlockAlign = wfx.nSamplesPerSec / 8 *wfx.nChannels;
+		wfx.nBlockAlign = (WORD)wfx.nSamplesPerSec / 8 *wfx.nChannels;
 		wfx.nAvgBytesPerSec = wfx.nSamplesPerSec * wfx.nBlockAlign;
 
 		if(FAILED(hr = pDSBPrimary->SetFormat(&wfx))){

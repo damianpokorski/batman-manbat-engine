@@ -49,7 +49,7 @@ int WINAPI  WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			DispatchMessage(&msg);
 		}else{
 			t = timer.getSystemTime();
-			g_engine->Update(t - startTime);
+			g_engine->Update((float)(t - startTime));
 			Debug << "[Engine][FPS]" << 1.0f/(t - startTime) << std::endl;
 			startTime = t;
 		}

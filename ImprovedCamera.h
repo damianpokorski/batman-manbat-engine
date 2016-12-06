@@ -255,8 +255,8 @@ namespace Manbat {
 			case EventType::EVENT_MOUSEMOTION:
 			{
 				MouseMotionEvent* mme = (MouseMotionEvent*)e;
-				float movex = mme->deltax;
-				float movey = mme->deltay;
+				double movex = mme->deltax;
+				double movey = mme->deltay;
 
 				characterToCamera.y -= movex * 0.0005;
 				characterToCamera.p -= movey * 0.0005;

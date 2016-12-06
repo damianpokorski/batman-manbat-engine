@@ -12,14 +12,14 @@ namespace Manbat {
 		};
 		
 		void rotateBillboard(Camera* cam) {
-				float angleZ = 0;
+				double angleZ = 0;
 				//float deltaX = this->getPosition().getX() - cam->getPosition().getX();
-				float deltaX = (this->getPosition().getX() + this->getScale().getX()) - cam->getPosition().getX();
-				float deltaY = (this->getPosition().getY() + this->getScale().getY()) - cam->getPosition().getY(); 
-				float deltaZ = (this->getPosition().getZ() + this->getScale().getZ()) - cam->getPosition().getZ();
+				double deltaX = (this->getPosition().getX() + this->getScale().getX()) - cam->getPosition().getX();
+				double deltaY = (this->getPosition().getY() + this->getScale().getY()) - cam->getPosition().getY();
+				double deltaZ = (this->getPosition().getZ() + this->getScale().getZ()) - cam->getPosition().getZ();
 				angleZ = atan2(deltaX, deltaZ) * 180 / D3DX_PI;
-				float angleX = atan2(deltaY, deltaZ) * 180 / D3DX_PI;
-				float angleY = atan2(deltaX, deltaY) * 180 / D3DX_PI;
+				double angleX = atan2(deltaY, deltaZ) * 180 / D3DX_PI;
+				double angleY = atan2(deltaX, deltaY) * 180 / D3DX_PI;
 				this->setRotation(0, -90, angleZ);
 
 				if (AttachedTo) {
