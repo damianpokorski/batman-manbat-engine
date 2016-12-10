@@ -126,7 +126,6 @@ namespace Manbat {
 
 			// Options
 			time += delta;
-
 			//// Square selection
 			Content2D[8]->setPosition(Content2D[CurrentOption + 1]->getPosition().getX()-50, Content2D[CurrentOption + 1]->getPosition().getY());
 

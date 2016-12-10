@@ -137,7 +137,7 @@ namespace Manbat {
 				os.clear(); os.str("");
 
 				//loop through columns and display text
-				for (int i = 0; i < column1.size(); i++) {
+				for (size_t i = 0; i < column1.size(); i++) {
 
 					if (StatFlag == 1 && i == 0 ||
 						StatFlag == 2 && i == 6 ||
@@ -159,14 +159,14 @@ namespace Manbat {
 					y += 30;
 				}
 
-				for (int i = 0; i < characterClasses.size(); i++) {
+				for (size_t i = 0; i < characterClasses.size(); i++) {
 					if (CharacterStat.PrimaryClass== characterClasses[i]) {
 						hats[i]->setPosition(600, 300);
 						hats[i]->Render();
 					}
 				}
 
-				for (int i = 0; i < characterClasses.size(); i++) {
+				for (size_t i = 0; i < characterClasses.size(); i++) {
 					if (CharacterStat.SecondaryClass == characterClasses[i]) {
 						props[i]->setPosition(740, 320);
 						props[i]->Render();

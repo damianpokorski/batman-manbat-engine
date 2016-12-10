@@ -122,6 +122,7 @@
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="SaveGame.h" />
+    <ClInclude Include="ScarletSkylineGameLogic.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Skybox.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="PauseScreen.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="ScarletSkylineGameLogic.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Sound.cpp" />

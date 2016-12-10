@@ -97,8 +97,7 @@ namespace Manbat
 		//scale transform
 		double getScaleHoriz() { return scale.x; }
 		double getScaleVert() { return scale.y;}
-		void setScale(double horiz, double vert) { scale.x = horiz;
-		scale.y = vert;	}
+		void setScale(double horiz, double vert) { scale.x = horiz; scale.y = vert;	}
 		void setScale(double scale) { setScale(scale, scale); }
 
 		//rendering color

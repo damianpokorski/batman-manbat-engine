@@ -274,7 +274,7 @@ namespace Manbat{
 		buryEntities();
 	}
 	void Engine::UpdateMouse(){
-		/*
+		
 		static int oldPosX =0;
 		static int oldPosY = 0;
 		for(int n=0;n<4;n++){
@@ -300,12 +300,12 @@ namespace Manbat{
 		if(wheel!=0){
 			RaiseEvent(new MouseWheelEvent(wheel));
 		}
-		*/
+		
 		// XBOX Update - lazymode
 		
-		/*XINPUT_STATE PadState = p_padinput->GetState();
+		XINPUT_STATE PadState = p_padinput->GetState();
 		XboxPad* padPtr = p_padinput;
-		RaiseEvent(new XButtonEvent(PadState, padPtr));*/
+		RaiseEvent(new XButtonEvent(PadState, padPtr));
 
 	}
 	void Engine::UpdateKeyboard(){

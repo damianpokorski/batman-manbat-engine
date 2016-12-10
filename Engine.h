@@ -84,6 +84,7 @@
 #include "CreditsScreen.h"
 #include "GameLogic.h"
 #include "CharacterLoader.h"
+#include "ScarletSkylineGameLogic.h"
 
 // Load libraries
 #pragma comment(lib, "d3d9.lib")		// d3d

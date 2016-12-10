@@ -7,15 +7,23 @@ using namespace Manbat;
 std::vector<Screen*> GameStates;
 cSound* BGM;
 bool game_preload() {
-	//Insulin Rush
-	/*
-	g_engine->SetAppTitle("Insulin rush");
-	g_engine->SetScreen(1600, 900, 32, false);
-	 */
+	
+	if (g_engine->p_commandLineParams == "insulin")
+	{
+		//Insulin Rush
+		g_engine->SetAppTitle("insulin");
+		g_engine->SetScreen(1600, 900, 32, false);
+	}else
+	{
+		//Scarlet Skyline
+		g_engine->SetAppTitle("scarlet_skyline");
+		g_engine->SetScreen(1024, 720, 32, false);
+	}
+	
+	 
 	 //Scarlet Skyline
 	 
-	 g_engine->SetAppTitle("Scarlet Skyline");
-	 g_engine->SetScreen(1024, 720, 32, false);
+	 
 	 
 	return true;
 }
@@ -25,20 +33,27 @@ bool game_init(HWND hwnd) {
 	cSoundLayer::Create(g_engine->GetWindowHandle());
 	BGM = new cSound("Sound/BGM.wav");
 	BGM->Play(true);
-	// // Insulin Rush
-	//GameStates.push_back(new StartScreen());
-	//GameStates.back()->isActive = true;
-	//GameStates.push_back(new LevelSelectionScreen());
-	//GameStates.push_back(new LoadingScreen());
-	//GameStates.push_back(new GameLogic());
-	//GameStates.back()->Init();
-	//GameStates.push_back(new CreditsScreen());
-	//
-	 //Scarlet skyline
-	GameStates.push_back(new CharacterLoader());
-	GameStates.back()->isActive = true;
-	GameStates.back()->Init();
-	// Scarlet skyline resolution
+	// Decide which game is being played
+	if (g_engine->p_commandLineParams == "insulin")
+	{
+		//Insulin Rush
+		GameStates.push_back(new StartScreen());
+		GameStates.back()->isActive = true;
+		GameStates.push_back(new LevelSelectionScreen());
+		GameStates.push_back(new LoadingScreen());
+		GameStates.push_back(new GameLogic());
+		GameStates.back()->Init();
+		GameStates.push_back(new CreditsScreen());
+	}
+	else
+	{
+		//Scarlet skyline
+		GameStates.push_back(new CharacterLoader());
+		GameStates.push_back(new ScarletSkylineGameLogic());
+		GameStates.back()->Init();
+		GameStates.back()->isActive = true;
+		
+	}
 	return true;
 }
 
