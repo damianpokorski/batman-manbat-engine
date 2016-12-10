@@ -132,7 +132,7 @@ namespace Manbat{
 		D3DDISPLAYMODE dm;
 		p_d3d->GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&dm);
 
-		D3DPRESENT_PARAMETERS d3dpp;
+		
 		ZeroMemory(&d3dpp, sizeof(d3dpp));
 		d3dpp.Windowed = !fullscreen;
 		d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
@@ -237,7 +237,10 @@ namespace Manbat{
 			p_coreFrameRate = p_coreFrameCount;
 			p_coreFrameCount = 0;
 		}
-		
+
+		p_input->Update();
+		UpdateKeyboard();
+		UpdateMouse();
 		game_update(elapsedTime);
 
 		if(!p_pauseMode){
@@ -255,9 +258,6 @@ namespace Manbat{
 				p_screenFrameCount = 0;
 			}
 
-			p_input->Update();
-			UpdateKeyboard();
-			UpdateMouse();
 
 			if(p_device->BeginScene()==D3D_OK){
 				g_engine->ClearScene(g_engine->GetBackdropColor());
@@ -274,6 +274,7 @@ namespace Manbat{
 		buryEntities();
 	}
 	void Engine::UpdateMouse(){
+		/*
 		static int oldPosX =0;
 		static int oldPosY = 0;
 		for(int n=0;n<4;n++){
@@ -299,22 +300,30 @@ namespace Manbat{
 		if(wheel!=0){
 			RaiseEvent(new MouseWheelEvent(wheel));
 		}
-
+		*/
 		// XBOX Update - lazymode
-		XINPUT_STATE PadState = p_padinput->GetState();
+		
+		/*XINPUT_STATE PadState = p_padinput->GetState();
 		XboxPad* padPtr = p_padinput;
-		RaiseEvent(new XButtonEvent(PadState, padPtr));
+		RaiseEvent(new XButtonEvent(PadState, padPtr));*/
 
 	}
 	void Engine::UpdateKeyboard(){
+		static Timer T;
+		//Debug << " Keyboard check @" << T.getElapsedClock() << std::endl;
 		static char old_keys[256];
 		for(int n=0;n<255;n++){
 			if(p_input->GetKeyState(n) & 0x80){
 				old_keys[n] = p_input->GetKeyState(n);
+				//Debug << "Key Down";
 				RaiseEvent(new KeyPressEvent(n));
-			}else if(old_keys[n] &0x80){
-				old_keys[n] = p_input->GetKeyState(n);
-				RaiseEvent(new KeyReleaseEvent(n));
+			}
+			else {
+				if (old_keys[n] & 0x80) {
+					old_keys[n] = p_input->GetKeyState(n);
+					//Debug << "Key Up";
+					RaiseEvent(new KeyReleaseEvent(n));
+				}
 			}
 		}
 	}
@@ -433,12 +442,12 @@ namespace Manbat{
 	}
 
 	void Engine::testForCollisions(){
-		Manbat::Timer timer;
+		//Manbat::Timer timer;
 		for (size_t i = 0; i < p_entities.size(); i++) {
 			p_entities[i]->setCollided(false);
 			p_entities[i]->setCollideBuddy(NULL);
 		}
-		Debug << "[Collision] Entities: " << p_entities.size() << std::endl;
+		//Debug << "[Collision] Entities: " << p_entities.size() << std::endl;
 		int checks = 0;
 		//if(!p_globalCollision) return;
 		if(p_globalCollision)
@@ -464,11 +473,12 @@ namespace Manbat{
 			checks+= CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_SCENERY_MESH);
 			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_MAINPLANE);
 			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_ENEMY_MESH);
+			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_FLAG);
 			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_COLLECTABLE_MESH);
 			checks += CollideEntityTypes(EntityType::ENTITY_ENEMY_MESH, EntityType::ENTITY_SCENERY_MESH);
 		}
-		Debug << "[Collision] Checked for: " << checks << " collisions." << std::endl;
-		Debug << "[Collision] Collision checks took: 1/" << (1.0f/timer.getElapsedClock()) << " of a second" << std::endl;
+		//Debug << "[Collision] Checked for: " << checks << " collisions." << std::endl;
+		//Debug << "[Collision] Collision checks took: 1/" << (1.0f/timer.getElapsedClock()) << " of a second" << std::endl;
 
 	}
 

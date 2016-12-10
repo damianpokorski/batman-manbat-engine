@@ -34,7 +34,7 @@ namespace Manbat {
 			void virtual Render3D()=0;
 			// 
 			void virtual Render2D()=0;
-			virtual void Deactivate() = 0;
+			virtual void Deactivate(){};
 			void virtual InputEvent(IEvent* e) = 0;
 			
 			float time;

@@ -441,12 +441,25 @@ namespace Manbat {
 							iter2++;
 						}
 					}
-//					if ((*iter)->materials != NULL) delete[](*iter)->materials;
-	//				(*iter)->textures = NULL;
-		//			(*iter)->mesh->Release();
+					//			if ((*iter)->materials != NULL) delete[](*iter)->materials;
+					//				(*iter)->textures = NULL;
+					//			(*iter)->mesh->Release();
+					
 					iter = scene->contents.erase(iter);
-
 			}
+			// Remove all of the entities
+			g_engine->p_entities.clear();
+			g_engine->SortedEntities.clear();
+			//// Reinitialize the floor
+			//mainplane = new ImprovedMesh();
+			//mainplane->Init("Scenery/mainplane.x", "Scenery/ground.jpg");
+			//mainplane->setScale(5);
+			//mainplane->setCollidable(true);
+			//mainplane->setAlive(true);
+			//mainplane->setEntityType(ENTITY_MAINPLANE);
+			//g_engine->addEntity(mainplane);
+			//mainplane->Transform();
+
 			// Create new scene
 			scene = new Scene();
 			switch(levelID){

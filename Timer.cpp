@@ -13,9 +13,9 @@ namespace Manbat{
 	void Timer::Rest(double ms){
 		timer_start = getSystemTime();
 		//Debug << "Resting" << std::endl;
-		while(ms > GetElapsed()){
+		while((ms/1000) > GetElapsed()){
 			//Debug << "SLEEP timer start:" << ((getSystemTime() - timer_start) ) << " Get Elapsed" << GetElapsed() << std::endl;
-			//Sleep(1);
+			Sleep(1);
 		}
 	}
 	void Timer::Reset(){

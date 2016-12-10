@@ -176,7 +176,7 @@ namespace Manbat{
 			// Input stuff
 			Input *p_input;
 			XboxPad *p_padinput;
-			
+			D3DPRESENT_PARAMETERS d3dpp;
 			void UpdateKeyboard();
 			void UpdateMouse();
 
@@ -246,7 +246,6 @@ namespace Manbat{
 			int getEntityCount(enum EntityType entityType);
 			Entity* findEntity(int id);
 			Entity* findEntity(std::string name);
-
 			void buryEntities();
 
 			void enableGlobalCollisions(){ p_globalCollision = true;};
