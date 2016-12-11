@@ -7,7 +7,16 @@ namespace Manbat {
 			None,
 			Health,
 			Energy,
-			Insulin
+			Insulin,
+			Shotgun,
+			Revolver,
+			TwoByFour,
+			Molotov,
+			TNT,
+			SHELLS,
+			BULLETS,
+			BANDAGES,
+			JAHNWAYNE
 		};
 		float animProgress;
 		bool direction;

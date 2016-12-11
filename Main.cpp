@@ -31,11 +31,12 @@ bool game_preload() {
 bool game_init(HWND hwnd) {
 	// Initialize sound
 	cSoundLayer::Create(g_engine->GetWindowHandle());
-	BGM = new cSound("Sound/BGM.wav");
-	BGM->Play(true);
+	
 	// Decide which game is being played
 	if (g_engine->p_commandLineParams == "insulin")
 	{
+		BGM = new cSound("Sound/BGM.wav");
+		BGM->Play(true);
 		//Insulin Rush
 		GameStates.push_back(new StartScreen());
 		GameStates.back()->isActive = true;
@@ -47,6 +48,8 @@ bool game_init(HWND hwnd) {
 	}
 	else
 	{
+		BGM = new cSound("Sound/magnificentseven.wav");
+		BGM->Play(true);
 		//Scarlet skyline
 		GameStates.push_back(new CharacterLoader());
 		GameStates.push_back(new ScarletSkylineGameLogic());

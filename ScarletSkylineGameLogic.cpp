@@ -68,8 +68,6 @@ namespace Manbat {
 			}
 		}
 		scene->playerController = cam;
-		// Load BGM
-
 		// Font
 		font = new Font("Arial Bold", 30);
 		fontSmall = new Font("Arial", 14);
@@ -90,13 +88,37 @@ namespace Manbat {
 		Content2D.back()->setPivot(Vector2(0, 0));
 		Content2D.back()->setPosition(750, 500);
 		Content2D.back()->setSize(200, 200);
+		//
 		this->MiniMapPlayer = new Sprite();
 		Content2D.push_back(MiniMapPlayer);
 		Content2D.back()->Load("minimap/charmap.png");
 		Content2D.back()->setPivot(Vector2(0, 0));
 		Content2D.back()->setPosition(750, 500);
 		Content2D.back()->setSize(10, 10);
-		//
+		// 
+		for(auto element: scene->contents)
+		{
+			if(element->getPosition().getY() > 0)
+			{
+				Content2D.push_back(new Sprite());
+				Content2D.back()->Load("minimap/boxmap.png");
+				Content2D.back()->setPivot(Vector2(0, 0));
+				Content2D.back()->setPosition(ObjectToMap(element->getPosition()).getX(), ObjectToMap(element->getPosition()).getY());
+				Content2D.back()->setSize(5, 5);
+			}
+		}
+		// Bottom hud line
+		Content2D.push_back(new Sprite());
+		Content2D.back()->Load("HUD/hudbg.png");
+		Content2D.back()->setPivot(Vector2(0, 0));
+		Content2D.back()->setPosition(0, 600);
+		Content2D.back()->setSize(736, 123);
+		// Western font
+		westernFonts = new BitmapFont();
+		westernFonts->Load("western.tga");
+		westernFonts->setColumns(16);
+		westernFonts->setCharSize(32, 32);
+		westernFonts->loadWidthData("western.dat");
 		g_engine->setGlobalCollisions(true);
 	};
 
@@ -156,14 +178,42 @@ namespace Manbat {
 			//health -= 20;
 			cam->hitByEnemy = false;
 		}
-		if (cam->collectableHitEnergy) {
-			cam->collectableHitEnergy = false;
-		}
-		if (cam->collectableHitHealth) {
-			cam->collectableHitHealth = false;
-		}
-		if (cam->collectableHitInsulin) {
-			cam->collectableHitInsulin = false;
+		// Scarlet skyline pickup flag has been triggered
+		if(cam->CollectableFlag != ImprovedCollectable::CollectableType::None)
+		{
+			switch(cam->CollectableFlag)
+			{
+			case ImprovedCollectable::Shotgun: 
+				shotgunGotFlag = true;
+				shells += 5;
+				break;
+			case ImprovedCollectable::Revolver: 
+				revolverGotFlag = true;
+				bullets += 5;
+				break;
+			case ImprovedCollectable::TwoByFour: 
+				woodFlag = true;
+				break;
+			case ImprovedCollectable::Molotov: 
+				molotovs++;
+				break;
+			case ImprovedCollectable::TNT: 
+				tnt++;
+				break;
+			case ImprovedCollectable::SHELLS: 
+				shells += 10;
+				break;
+			case ImprovedCollectable::BULLETS: 
+				bullets += 20;
+				break;
+			case ImprovedCollectable::BANDAGES: 
+				health += 10;
+				break;
+			case ImprovedCollectable::JAHNWAYNE: 
+				break;
+			default: break;
+			}
+			cam->CollectableFlag = ImprovedCollectable::CollectableType::None;
 		}
 
 		// Slow health regeneration over time
@@ -192,6 +242,7 @@ namespace Manbat {
 			scene->sortBillboardsByDistance();
 			scene->sortBillboardsByDistance();
 		}
+
 	}
 
 	void ScarletSkylineGameLogic::Render3D() {
@@ -244,8 +295,67 @@ namespace Manbat {
 		if (FPSDisplay) {
 			ss.str("");
 			ss << "FPS: " << g_engine->p_screenFrameRate << std::endl;
-			font->Print(950, 20, ss.str());
+			font->Print(900, 20, ss.str());
 		}
+
+		Color fontColor = Color(100, 10, 10, 200);
+
+		westernFonts->setScale(0.75f);
+
+		std::ostringstream os;
+
+		os << "Weapons: ";
+		westernFonts->Print(10, 610, os.str(), fontColor);
+		os.clear(); os.str("");
+
+		os << "Shotgun: ";
+		if (shotgunGotFlag) fontColor = Color(100, 100, 10, 200);
+		westernFonts->Print(110, 610, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << "Revolver: ";
+		if (revolverGotFlag) fontColor = Color(100, 100, 10, 200);
+		westernFonts->Print(210, 610, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << "2 x 4: ";
+		if (woodFlag) fontColor = Color(100, 100, 10, 200);
+		westernFonts->Print(310, 610, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << "Molltovs: ";
+		if (molotovs>0) fontColor = Color(100, 100, 10, 200);
+		westernFonts->Print(410, 610, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << "Ammo: ";
+		westernFonts->Print(10, 660, os.str(), fontColor);
+		os.clear(); os.str("");
+
+		os << shells;
+		westernFonts->Print(110, 660, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << bullets;
+		westernFonts->Print(210, 660, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << molotovs;
+		westernFonts->Print(310, 660, os.str(), fontColor);
+		os.clear(); os.str("");
+		fontColor = Color(100, 10, 10, 200);
+
+		os << "Health: " << health;
+		westernFonts->Print(410, 680, os.str(), fontColor);
+		os.clear(); os.str("");
+
+
 	}
 
 	void ScarletSkylineGameLogic::InputEvent(IEvent* e) {

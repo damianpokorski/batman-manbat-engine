@@ -59,9 +59,20 @@ namespace Manbat {
 		Vector2 ObjectToMap(Vector3 V)
 		{
 			Vector2 newPos;
-			newPos.x = MiniMap->getPosition().x + (floor(V.x / 500 * 200));
-			newPos.y = MiniMap->getPosition().y + (-floor(V.z / 500 * 200));
+			newPos.x = MiniMap->getPosition().x + (floor(V.x / 10));
+			newPos.y = MiniMap->getPosition().y + (-floor(V.z / 10));
 			return newPos;
 		}
+		// Variables
+		
+		bool shotgunGotFlag = false;
+		bool revolverGotFlag = false;
+		bool woodFlag = false;
+		int molotovs = 0;
+		int tnt = 0;
+		int bullets = 0;
+		int shells = 0;
+		int health = 100;
+		BitmapFont* westernFonts;
 	};
 };

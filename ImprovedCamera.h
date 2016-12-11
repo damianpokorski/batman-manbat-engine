@@ -99,18 +99,24 @@ namespace Manbat {
 				hitSound->Play();
 			}
 		};
+		ImprovedCollectable::CollectableType CollectableFlag = ImprovedCollectable::CollectableType::None;
 		void PlayerToCollectableCollision(ImprovedCollectable* collectable) {
 			if (collectable->Disabled)
 				return;
 			switch (collectable->collectableType) {
 				case ImprovedCollectable::CollectableType::Energy:
-					collectableHitEnergy = true;
-				break;
+						collectableHitEnergy = true;
+					break;
 				case ImprovedCollectable::CollectableType::Health:
-					collectableHitHealth = true;
-				break;
+						collectableHitHealth = true;
+					break;
 				case ImprovedCollectable::CollectableType::Insulin:
-					collectableHitInsulin = true;
+						collectableHitInsulin = true;
+					break;
+				case ImprovedCollectable::None: 
+					break;
+				default: 
+					CollectableFlag = collectable->collectableType;
 				break;
 			}
 			collectable->Disabled = true;

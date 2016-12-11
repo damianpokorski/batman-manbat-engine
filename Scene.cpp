@@ -49,7 +49,7 @@ namespace Manbat {
 		// X - Box
 		// - - Jumpable obstacle
 		// P - Player starting position
-
+		// 1-9 Tutorial billboards
 		// Carrot
 		if (Element == 'C') {
 			Enemy* temp = new Enemy();
@@ -212,6 +212,68 @@ namespace Manbat {
 		if (Element == 'P') {
 			PlayerStart = Vector3(x*multiplier, 50, z*multiplier*-1);
 		}
+		// Scarlet Skyline pickups
+		if (Element == '!' ||	// Shotgun
+			Element == '"' ||	// Revolver
+			Element == '£' ||	// TwoByFour
+			Element == '$' ||	// Molotov
+			Element == '%' ||	// TNT
+			Element == '^' ||	// SHELLS
+			Element == '&' ||	// BULLETS
+			Element == '*' ||	// BANDAGES
+			Element == '(' 	// JAHNWAYNE
+			) {
+			ImprovedCollectable* temp = new ImprovedCollectable();
+			
+			switch(Element)
+			{
+				case '!':
+					temp->Init("Scenery/crate.x", "Collectables/shotup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::Shotgun;
+					break;
+				case '"':
+					temp->Init("Scenery/crate.x", "Collectables/revup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::Revolver;
+					break;
+				case '£':
+					temp->Init("Scenery/crate.x", "Collectables/bandup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::TwoByFour;
+					break;
+				case '$':
+					temp->Init("Scenery/crate.x", "Collectables/moltup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::Molotov;
+					break;
+				case '%':
+					temp->Init("Scenery/crate.x", "Collectables/tntup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::TNT;
+					break;
+				case '^':
+					temp->Init("Scenery/crate.x", "Collectables/shellup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::SHELLS;
+					break;
+				case '&':
+					temp->Init("Scenery/crate.x", "Collectables/bullup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::BULLETS;
+					break;
+				case '*':
+					temp->Init("Scenery/crate.x", "Collectables/bandup.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::BANDAGES;
+					break;
+				case '(':
+					temp->Init("Scenery/crate.x", "Collectables/john_up.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::JAHNWAYNE;
+					break;
+				default: break;
+			}
+			temp->setPosition(x*multiplier, multiplier / 2, z*multiplier*-1);
+			temp->setScale(0.25);
+			temp->setCollidable(true);
+			temp->setAlive(true);
+			temp->setEntityType(ENTITY_IMPROVED_COLLECTABLE_MESH);
+			contents.push_back(temp);
+			g_engine->addEntity(temp);
+		}
+			
 		// Tutorial billboards
 		if (
 			Element == '0' ||
