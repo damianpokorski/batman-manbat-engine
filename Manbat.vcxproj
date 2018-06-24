@@ -90,10 +90,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedBillboard.h" />
+    <ClInclude Include="AStarNode.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="BitmapFont.h" />
     <ClInclude Include="BoneMesh.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CashItem.h" />
     <ClInclude Include="CharacterLoader.h" />
     <ClInclude Include="Collectable.h" />
     <ClInclude Include="Color.h" />
@@ -122,6 +124,7 @@
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="SaveGame.h" />
+    <ClInclude Include="ScarletEnemy.h" />
     <ClInclude Include="ScarletSkylineGameLogic.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />
@@ -138,9 +141,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedBillboard.cpp" />
+    <ClCompile Include="AStarNode.cpp" />
     <ClCompile Include="BitmapFont.cpp" />
     <ClCompile Include="BoneMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CashItem.cpp" />
     <ClCompile Include="CharacterLoader.cpp" />
     <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -164,6 +169,7 @@
     <ClCompile Include="PauseScreen.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="ScarletEnemy.cpp" />
     <ClCompile Include="ScarletSkylineGameLogic.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Skybox.cpp" />

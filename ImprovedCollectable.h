@@ -16,7 +16,8 @@ namespace Manbat {
 			SHELLS,
 			BULLETS,
 			BANDAGES,
-			JAHNWAYNE
+			JAHNWAYNE,
+			Cash
 		};
 		float animProgress;
 		bool direction;

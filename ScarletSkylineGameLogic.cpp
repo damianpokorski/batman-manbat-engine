@@ -86,7 +86,7 @@ namespace Manbat {
 		Content2D.push_back(MiniMap);
 		Content2D.back()->Load("minimap/mapbg.png");
 		Content2D.back()->setPivot(Vector2(0, 0));
-		Content2D.back()->setPosition(750, 500);
+		Content2D.back()->setPosition(790, 500);
 		Content2D.back()->setSize(200, 200);
 		//
 		this->MiniMapPlayer = new Sprite();
@@ -290,6 +290,7 @@ namespace Manbat {
 			ss << "Collision with enemies count:" << cam->enemyCollision << std::endl;
 			ss << "Total collideable meshes " << g_engine->p_entities.size() << std::endl;
 			ss << "Total meshes within the level" << scene->contents.size() << std::endl;
+			ss << "Total collision checks performed:" << g_engine->CollisionIterationsPerFrame << std::endl;
 			font->Print(20, 20, ss.str());
 		}
 		if (FPSDisplay) {

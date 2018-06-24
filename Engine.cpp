@@ -448,7 +448,7 @@ namespace Manbat{
 			p_entities[i]->setCollideBuddy(NULL);
 		}
 		//Debug << "[Collision] Entities: " << p_entities.size() << std::endl;
-		int checks = 0;
+		CollisionIterationsPerFrame = 0;
 		//if(!p_globalCollision) return;
 		if(p_globalCollision)
 		{
@@ -462,7 +462,7 @@ namespace Manbat{
 								p_entities[j]->setCollided(true);
 								p_entities[j]->setCollideBuddy(p_entities[j]);
 							}
-							checks++;
+							CollisionIterationsPerFrame++;
 						}
 					}
 				}
@@ -470,12 +470,15 @@ namespace Manbat{
 		}else
 		{
 			// If scenery to player and enemies collision
-			checks+= CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_SCENERY_MESH);
-			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_MAINPLANE);
-			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_ENEMY_MESH);
-			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_FLAG);
-			checks += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_COLLECTABLE_MESH);
-			checks += CollideEntityTypes(EntityType::ENTITY_ENEMY_MESH, EntityType::ENTITY_SCENERY_MESH);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_SCENERY_MESH);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_MAINPLANE);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_ENEMY_MESH);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_FLAG);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_COLLECTABLE_MESH);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_PLAYER_MESH, EntityType::ENTITY_IMPROVED_COLLECTABLE_MESH);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_ENEMY_MESH, EntityType::ENTITY_SCENERY_MESH);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_ENEMY_MESH, EntityType::ENTITY_TNT);
+			CollisionIterationsPerFrame += CollideEntityTypes(EntityType::ENTITY_ENEMY_MESH, EntityType::ENTITY_ENEMY_MESH);
 		}
 		//Debug << "[Collision] Checked for: " << checks << " collisions." << std::endl;
 		//Debug << "[Collision] Collision checks took: 1/" << (1.0f/timer.getElapsedClock()) << " of a second" << std::endl;
@@ -494,7 +497,14 @@ namespace Manbat{
 						return false;
 					break;
 					case ENTITY_COLLECTABLE_MESH:
-						return Collision((Mesh*)entity1, (Mesh*)entity2);
+					{
+						bool temp = Collision((Mesh*)entity1, (Mesh*)entity2);
+						if (temp) {
+							Debug << "Collided with a collectable" << std::endl;
+						}
+						return temp;
+					}
+						
 					break;
 					case ENTITY_MAINPLANE:
 						return PlayerToSceneryCollision((Mesh*)entity1, (Mesh*)entity2);

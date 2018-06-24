@@ -21,7 +21,8 @@ namespace Manbat
 		ENTITY_BILLBOARD,
 		ENTITY_MAINPLANE,
 		ENTITY_IMPROVED_COLLECTABLE_MESH,
-		ENTITY_FLAG
+		ENTITY_FLAG,
+		ENTITY_TNT
 	};
 
 	/************************************************************************/

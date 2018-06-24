@@ -13,7 +13,7 @@ namespace Manbat {
 			};
 			bool Disabled;
 			bool Init(char* mesh_filename, char* texture_filename = "");
-			void LazyRender(Effect* e, Camera* c);
+			virtual void LazyRender(Effect* e, Camera* c);
 			void LoadTexture(char* texture_filename = "");
 			
 	};

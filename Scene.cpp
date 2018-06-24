@@ -156,12 +156,25 @@ namespace Manbat {
 			contents.push_back(temp);
 			g_engine->addEntity(temp);
 		}
+		// Enemy Skelibobs
+		if (Element == 'L') {
+			Enemy* temp = new Enemy();
+			temp->Init("bones_all.x", "bones.bmp");
+			temp->setPosition(x*multiplier, 5, z*multiplier*-1);
+			temp->setScale(25.0f);
+			temp->setCollidable(true);
+			temp->setAlive(true);
+			temp->setRotation(0, 0, 0);
+			temp->setEntityType(ENTITY_ENEMY_MESH);
+			contents.push_back(temp);
+			g_engine->addEntity(temp);
+
+		}
 		// Boxes
 		if (Element == 'X') {
 			ImprovedMesh* temp = new ImprovedMesh();
 			//Enemy* temp = new Enemy();
 			temp->Init("Scenery/crate.x", "Scenery/portal2.jpg");
-			//temp->Init("Scenery/carrot9.x", "Scenery/carrot.png");
 			temp->setPosition(x*multiplier, 25, z*multiplier*-1);
 			temp->setScale(1,1,1);
 			temp->setCollidable(true);
@@ -174,7 +187,6 @@ namespace Manbat {
 			ImprovedMesh* temp = new ImprovedMesh();
 			//Enemy* temp = new Enemy();
 			temp->Init("Scenery/crate.x", "Scenery/portal2.jpg");
-			//temp->Init("Scenery/carrot9.x", "Scenery/carrot.png");
 			temp->setPosition(x*multiplier, 75, z*multiplier*-1);
 			temp->setScale(1, 1, 1);
 			temp->setCollidable(false);
@@ -186,7 +198,6 @@ namespace Manbat {
 			ImprovedMesh* temp = new ImprovedMesh();
 			//Enemy* temp = new Enemy();
 			temp->Init("Scenery/crate.x", "Scenery/portal2.jpg");
-			//temp->Init("Scenery/carrot9.x", "Scenery/carrot.png");
 			temp->setPosition(x*multiplier, 75, z*multiplier*-1);
 			temp->setScale(1, 1, 1);
 			temp->setCollidable(true);
@@ -200,7 +211,6 @@ namespace Manbat {
 			ImprovedMesh* temp = new ImprovedMesh();
 			//Enemy* temp = new Enemy();
 			temp->Init("Scenery/crate.x", "Scenery/portal2.jpg");
-			//temp->Init("Scenery/carrot9.x", "Scenery/carrot.png");
 			temp->setPosition(x*multiplier,0, z*multiplier*-1);
 			temp->setScale(1);
 			temp->setCollidable(true);
@@ -221,7 +231,8 @@ namespace Manbat {
 			Element == '^' ||	// SHELLS
 			Element == '&' ||	// BULLETS
 			Element == '*' ||	// BANDAGES
-			Element == '(' 	// JAHNWAYNE
+			Element == '(' ||   // JAHNWAYNE
+			Element == ')' 	// JAHNWAYNE
 			) {
 			ImprovedCollectable* temp = new ImprovedCollectable();
 			
@@ -262,6 +273,10 @@ namespace Manbat {
 				case '(':
 					temp->Init("Scenery/crate.x", "Collectables/john_up.png");
 					temp->collectableType = ImprovedCollectable::CollectableType::JAHNWAYNE;
+					break;
+				case ')':
+					temp->Init("Scenery/crate.x", "Collectables/cash.png");
+					temp->collectableType = ImprovedCollectable::CollectableType::Cash;
 					break;
 				default: break;
 			}

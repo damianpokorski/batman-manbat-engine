@@ -66,6 +66,8 @@
 #include "BitmapFont.h"
 #include "Ray.h"
 #include "Collectable.h"
+#include "AStarNode.h"
+#include "CashItem.h"
 
 #include "SaveGame.h"
 #include "ImprovedMesh.h"
@@ -75,6 +77,7 @@
 #include "AnimatedBillboard.h"
 #include "ImprovedSkybox.h"
 #include "ImprovedCamera.h"
+#include "ScarletEnemy.h"
 #include "Scene.h"
 #include "Screen.h"
 #include "StartScreen.h"
@@ -84,6 +87,7 @@
 #include "CreditsScreen.h"
 #include "GameLogic.h"
 #include "CharacterLoader.h"
+
 #include "ScarletSkylineGameLogic.h"
 
 // Load libraries
@@ -272,6 +276,7 @@ namespace Manbat{
 			std::map<EntityType, vector<Entity*>> SortedEntities;
 
 			int CollideEntityTypes(EntityType Foo, EntityType Bar);
+			int CollisionIterationsPerFrame = 0;
 	};
 };
 

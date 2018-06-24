@@ -40,6 +40,7 @@ namespace Manbat {
 			}
 			break;
 		}
+		return;
 		// After logic is applied - set the indicator to display according image
 		switch (currentState) {
 		case Roam:

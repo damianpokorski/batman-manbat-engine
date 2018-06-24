@@ -341,6 +341,7 @@ namespace Manbat {
 			ss << "Collision with enemies count:" << cam->enemyCollision << std::endl;
 			ss << "Total collideable meshes " << g_engine->p_entities.size() << std::endl;
 			ss << "Total meshes within the level" << scene->contents.size() << std::endl;
+			ss << "Total collision checks performed:" << g_engine->CollisionIterationsPerFrame << std::endl;
 			font->Print(20, 20, ss.str());
 		}
 		if (FPSDisplay) {
