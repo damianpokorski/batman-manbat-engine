@@ -14,3 +14,6 @@ But it is a nice memory piece.
 
 # Doubt anyone will find this useful. 
 Would be a shame to delete it though.
+
+# More info can be found on 
+[https://damianpokorski.com/#/projects/Insulin-Rush](https://damianpokorski.com/#/projects/Insulin-Rush)
